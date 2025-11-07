@@ -384,7 +384,7 @@
       <h1>Tirage au sort des cadeaux</h1>
       <p class="subtitle">
         Application d’organisation du tirage : seul l’organisateur voit le résultat complet.
-        Les participants reçoivent chacun un mail personnel avec la personne à gâter.
+        Les participants reçoivent chacun un message personnel avec la personne à gâter.
       </p>
 
       <div>
@@ -392,18 +392,18 @@
           <span>🎯</span> Liste des participants
         </div>
         <label for="participants">
-          Format : <code>Nom ; email (optionnel) ; couple (optionnel)</code>
+          Format : <code>Nom ; contact (email ou téléphone) ; couple (optionnel)</code>
         </label>
         <textarea id="participants" placeholder="Exemple :
 Alice ; alice@test.com ; couple1
-Bob ; bob@test.com ; couple1
+Bob ; 0601020304 ; couple1
 Carole ; carole@test.com ; couple2
-David ; david@test.com ; couple2
+David ; 0611223344 ; couple2
 Emma ; emma@test.com ;
-Lucas ;"></textarea>
+Lucas ; 0655667788 ;"></textarea>
         <p class="hint">
           ➜ Un participant par ligne. <br />
-          ➜ <strong>Nom</strong> obligatoire, <strong>email</strong> et <strong>couple</strong> facultatifs. <br />
+          ➜ <strong>Nom</strong> obligatoire, <strong>contact</strong> = email ou n° de téléphone, <strong>couple</strong> facultatif. <br />
           ➜ Les personnes ayant le même <strong>couple</strong> ne pourront pas se tirer entre elles (conjoints, etc.).
         </p>
       </div>
@@ -451,9 +451,9 @@ Lucas ;"></textarea>
             <textarea id="copy-pairs" class="copy-textarea" readonly></textarea>
           </div>
           <div>
-            <div class="copy-title">Textes d’emails (option sauvegarde)</div>
+            <div class="copy-title">Textes de messages (backup)</div>
             <div class="hint">
-              Version brute de tous les messages. Tu peux la garder en backup, mais l’envoi se fera plus bas, par personne.
+              Version brute de tous les messages (mail ou SMS). L’envoi réel se fait dans le tableau ci-dessous.
             </div>
             <textarea id="copy-emails-text" class="copy-textarea" readonly></textarea>
           </div>
@@ -461,10 +461,10 @@ Lucas ;"></textarea>
 
         <div style="margin-top:1.4rem;">
           <div class="section-title">
-            <span>📧</span> Envoi des mails aux participants
+            <span>📨</span> Envoi aux participants
           </div>
           <p class="hint">
-            Un bouton par personne : ça ouvre ton client mail avec le message pré-rempli.  
+            Un bouton par personne : ça ouvre soit ton client mail, soit ton appli SMS (sur téléphone), avec le message pré-rempli.  
             <strong>Chaque participant voit uniquement la personne à qui il doit offrir.</strong>
           </p>
 
@@ -472,7 +472,7 @@ Lucas ;"></textarea>
             <thead>
               <tr>
                 <th>Participant</th>
-                <th>Email</th>
+                <th>Contact</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -541,10 +541,10 @@ Lucas ;"></textarea>
         if (!parts[0]) continue;
 
         const name = parts[0];
-        const email = parts[1] || "";
+        const contact = parts[1] || "";
         const group = parts[2] || "";
 
-        map.set(name, { name, email, group });
+        map.set(name, { name, contact, group });
       }
 
       return Array.from(map.values());
@@ -590,9 +590,9 @@ Lucas ;"></textarea>
             const receiver = participants[indices[i]];
             pairs.push({
               giver: giver.name,
-              giverEmail: giver.email,
+              giverContact: giver.contact,
               receiver: receiver.name,
-              receiverEmail: receiver.email
+              receiverContact: receiver.contact
             });
           }
           return pairs;
@@ -614,7 +614,7 @@ Lucas ;"></textarea>
       emailsTableBody.innerHTML = "";
 
       const linesPairs = [];
-      const emailBlocks = [];
+      const messageBlocks = [];
 
       pairs.forEach(p => {
         // Tableau récap
@@ -629,36 +629,39 @@ Lucas ;"></textarea>
 
         linesPairs.push(`${p.giver} -> ${p.receiver}`);
 
-        // Texte brut pour sauvegarde
-        if (p.giverEmail && p.giverEmail.length > 0) {
+        // Message brut (pour backup)
+        if (p.giverContact && p.giverContact.length > 0) {
           const block =
-`Pour : ${p.giver} <${p.giverEmail}>
-Objet : Tirage au sort des cadeaux
+`Pour : ${p.giver} (${p.giverContact})
+Canal : ${p.giverContact.includes("@") ? "Email" : "Téléphone"}
+
+Message à envoyer :
 
 Bonjour ${p.giver},
 
 Tu offriras un cadeau à : ${p.receiver}.
 
-Garde ça pour toi 
+Garde ça pour toi 😊
 `;
-          emailBlocks.push(block);
+          messageBlocks.push(block);
         }
 
-        // Ligne pour tableau des emails
+        // Tableau des actions (mail ou SMS)
         const trEmail = document.createElement("tr");
         const tdName = document.createElement("td");
-        const tdMail = document.createElement("td");
+        const tdContact = document.createElement("td");
         const tdAction = document.createElement("td");
 
         tdName.textContent = p.giver;
 
-        if (p.giverEmail) {
+        if (p.giverContact) {
           const span = document.createElement("span");
           span.className = "badge-email";
-          span.textContent = p.giverEmail;
-          tdMail.appendChild(span);
+          span.textContent = p.giverContact;
+          tdContact.appendChild(span);
 
-          const subject = "Tirage de Noël - ta personne à gâter";
+          const isEmail = p.giverContact.includes("@");
+
           const body =
 `Bonjour ${p.giver},
 
@@ -668,30 +671,39 @@ Garde cette info pour toi 😊
 
 (Ne réponds pas à tous, sinon tu spoiles le tirage !)`;
 
+          let href = "";
+          if (isEmail) {
+            const subject = "Tirage de Noël - ta personne à gâter";
+            href = `mailto:${encodeURIComponent(p.giverContact)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+          } else {
+            // lien SMS (à ouvrir de préférence depuis un téléphone)
+            href = `sms:${encodeURIComponent(p.giverContact)}?&body=${encodeURIComponent(body)}`;
+          }
+
           const link = document.createElement("a");
-          link.href = `mailto:${encodeURIComponent(p.giverEmail)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+          link.href = href;
           link.className = "btn-link";
 
           const btn = document.createElement("button");
           btn.className = "btn-secondary";
-          btn.textContent = "Préparer le mail";
+          btn.textContent = isEmail ? "Préparer le mail" : "Préparer le SMS";
           link.appendChild(btn);
 
           tdAction.appendChild(link);
         } else {
           const span = document.createElement("span");
           span.className = "badge-email missing";
-          span.textContent = "Pas d’email renseigné";
-          tdMail.appendChild(span);
+          span.textContent = "Aucun contact renseigné";
+          tdContact.appendChild(span);
 
           const small = document.createElement("span");
           small.className = "hint";
-          small.textContent = " Compléter l'email dans la liste au-dessus si tu veux un envoi auto.";
+          small.textContent = " Ajoute un email ou un numéro dans la liste au-dessus pour activer l’envoi.";
           tdAction.appendChild(small);
         }
 
         trEmail.appendChild(tdName);
-        trEmail.appendChild(tdMail);
+        trEmail.appendChild(tdContact);
         trEmail.appendChild(tdAction);
         emailsTableBody.appendChild(trEmail);
       });
@@ -700,7 +712,7 @@ Garde cette info pour toi 😊
         `${pairs.length} participants • tirage généré le ${new Date().toLocaleString("fr-FR")}`;
 
       copyPairsArea.value = linesPairs.join("\n");
-      copyEmailsArea.value = emailBlocks.join("\n------------------------------\n\n");
+      copyEmailsArea.value = messageBlocks.join("\n------------------------------\n\n");
       resultsSection.classList.remove("hidden");
     }
 

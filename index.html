@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tirage au sort des cadeaux</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f5;
+      color: #111827;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      max-width: 960px;
+      width: 100%;
+      padding: 1.5rem;
+    }
+    .card {
+      background: white;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 10px 25px rgba(15,23,42,0.08);
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+    .subtitle {
+      text-align: center;
+      font-size: 0.95rem;
+      color: #6b7280;
+      margin-bottom: 1.5rem;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    textarea {
+      width: 100%;
+      resize: vertical;
+      padding: 0.75rem;
+      border-radius: 0.75rem;
+      border: 1px solid #d1d5db;
+      font-family: inherit;
+      font-size: 0.95rem;
+    }
+    textarea:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 1px #2563eb33;
+    }
+    .hint {
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-top: 0.25rem;
+    }
+    .actions {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    button {
+      border: none;
+      border-radius: 9999px;
+      padding: 0.6rem 1.2rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+    }
+    .btn-primary:hover { background: #1d4ed8; }
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+    .btn-secondary:hover { background: #d1d5db; }
+    .status {
+      font-size: 0.85rem;
+      color: #6b7280;
+    }
+    .status.error { color: #b91c1c; }
+    .status.success { color: #15803d; }
+
+    .results-card {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px dashed #e5e7eb;
+    }
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .results-title {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .small {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+    th, td {
+      padding: 0.6rem 0.5rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    th {
+      text-align: left;
+      background: #f9fafb;
+      font-weight: 600;
+    }
+    .copy-area {
+      margin-top: 0.75rem;
+    }
+    .copy-textarea {
+      width: 100%;
+      min-height: 80px;
+      font-size: 0.85rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      border-radius: 0.75rem;
+      border: 1px solid #e5e7eb;
+      padding: 0.5rem;
+      resize: vertical;
+    }
+    .copy-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .copy-title {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    @media (max-width: 768px) {
+      .card { padding: 1.1rem; }
+      h1 { font-size: 1.4rem; }
+      .actions { flex-direction: column; align-items: flex-start; }
+      .copy-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Tirage au sort des cadeaux</h1>
+      <p class="subtitle">
+        Application simple pour le tirage de Noël : tout reste dans ton navigateur, rien n’est envoyé sur Internet.
+      </p>
+
+      <div>
+        <label for="participants">
+          Liste des participants
+        </label>
+        <textarea id="participants" placeholder="Format : Nom ; email (optionnel) ; couple (optionnel)
+
+Exemple :
+Alice ; alice@test.com ; couple1
+Bob ; bob@test.com ; couple1
+Carole ; carole@test.com ; couple2
+David ; david@test.com ; couple2
+Emma ; emma@test.com ;
+Lucas ;"></textarea>
+        <p class="hint">
+          ➜ Un participant par ligne. <br />
+          ➜ <strong>Nom</strong> obligatoire, <strong>email</strong> et <strong>couple</strong> facultatifs. <br />
+          ➜ Les personnes ayant le même <strong>couple</strong> ne pourront pas se tirer entre elles (parfait pour les conjoints).
+        </p>
+      </div>
+
+      <div class="actions">
+        <button class="btn-primary" id="btn-generate">Générer le tirage</button>
+        <button class="btn-secondary" id="btn-clear">Vider la liste</button>
+        <span id="status" class="status"></span>
+      </div>
+
+      <div id="results-section" class="results-card" style="display:none;">
+        <div class="results-header">
+          <div>
+            <div class="results-title">Résultat du tirage</div>
+            <div class="small" id="results-meta"></div>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <button class="btn-secondary" id="btn-copy-pairs">Copier le tableau</button>
+            <button class="btn-secondary" id="btn-copy-emails">Copier les mails</button>
+          </div>
+        </div>
+
+        <table id="results-table">
+          <thead>
+            <tr>
+              <th>Offre un cadeau</th>
+              <th>À</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <div class="copy-grid">
+          <div class="copy-area">
+            <div class="copy-title">Résumé du tirage</div>
+            <div class="small">Texte simple de toutes les paires (pratique pour archiver).</div>
+            <textarea id="copy-pairs" class="copy-textarea" readonly></textarea>
+          </div>
+          <div class="copy-area">
+            <div class="copy-title">Textes prêts pour les emails</div>
+            <div class="small">
+              Un bloc par personne ayant un email. Copie-colle dans ton client mail.
+            </div>
+            <textarea id="copy-emails-text" class="copy-textarea" readonly></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const participantsInput = document.getElementById("participants");
+    const btnGenerate = document.getElementById("btn-generate");
+    const btnClear = document.getElementById("btn-clear");
+    const statusEl = document.getElementById("status");
+    const resultsSection = document.getElementById("results-section");
+    const resultsTableBody = document.querySelector("#results-table tbody");
+    const resultsMeta = document.getElementById("results-meta");
+    const btnCopyPairs = document.getElementById("btn-copy-pairs");
+    const btnCopyEmails = document.getElementById("btn-copy-emails");
+    const copyPairsArea = document.getElementById("copy-pairs");
+    const copyEmailsArea = document.getElementById("copy-emails-text");
+
+    let lastPairs = [];
+
+    function parseParticipants() {
+      const lines = participantsInput.value.split("\n");
+      const map = new Map(); // clé = nom, valeur = participant
+
+      for (let line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed) continue;
+
+        const parts = trimmed.split(";").map(p => p.trim());
+        if (parts.length === 0) continue;
+
+        const name = parts[0];
+        if (!name) continue;
+
+        const email = parts[1] || "";
+        const group = parts[2] || "";
+
+        map.set(name, {
+          name,
+          email,
+          group
+        });
+      }
+
+      return Array.from(map.values());
+    }
+
+    function generateDrawWithConstraints(participants, maxTries = 5000) {
+      const n = participants.length;
+      if (n < 2) {
+        throw new Error("Il faut au moins 2 participants.");
+      }
+
+      for (let attempt = 0; attempt < maxTries; attempt++) {
+        const indices = [...Array(n).keys()];
+
+        // Mélange de Fisher-Yates
+        for (let i = n - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [indices[i], indices[j]] = [indices[j], indices[i]];
+        }
+
+        let ok = true;
+
+        for (let i = 0; i < n; i++) {
+          const giver = participants[i];
+          const receiver = participants[indices[i]];
+
+          // 1. pas d'auto-attribution
+          if (indices[i] === i) {
+            ok = false;
+            break;
+          }
+
+          // 2. contraintes de couple/groupe
+          if (giver.group && receiver.group && giver.group === receiver.group) {
+            ok = false;
+            break;
+          }
+        }
+
+        if (ok) {
+          const pairs = [];
+          for (let i = 0; i < n; i++) {
+            const giver = participants[i];
+            const receiver = participants[indices[i]];
+            pairs.push({
+              giver: giver.name,
+              giverEmail: giver.email,
+              receiver: receiver.name,
+              receiverEmail: receiver.email,
+            });
+          }
+          return pairs;
+        }
+      }
+
+      throw new Error("Impossible de générer un tirage respectant toutes les contraintes (couples, etc.).");
+    }
+
+    function showStatus(message, type = "") {
+      statusEl.textContent = message;
+      statusEl.className = "status";
+      if (type === "error") statusEl.classList.add("error");
+      if (type === "success") statusEl.classList.add("success");
+    }
+
+    function renderResults(pairs) {
+      lastPairs = pairs;
+      resultsTableBody.innerHTML = "";
+
+      const linesPairs = [];
+      const emailBlocks = [];
+
+      pairs.forEach(p => {
+        const tr = document.createElement("tr");
+        const tdGiver = document.createElement("td");
+        const tdReceiver = document.createElement("td");
+        tdGiver.textContent = p.giver;
+        tdReceiver.textContent = p.receiver;
+        tr.appendChild(tdGiver);
+        tr.appendChild(tdReceiver);
+        resultsTableBody.appendChild(tr);
+
+        linesPairs.push(`${p.giver} -> ${p.receiver}`);
+
+        if (p.giverEmail && p.giverEmail.length > 0) {
+          const block =
+`Pour : ${p.giver} <${p.giverEmail}>
+Objet : Tirage au sort des cadeaux
+
+Bonjour ${p.giver},
+
+Tu offriras un cadeau à : ${p.receiver}.
+
+Garde ça pour toi 😉
+`;
+          emailBlocks.push(block);
+        }
+      });
+
+      resultsMeta.textContent = `${pairs.length} participants • ${new Date().toLocaleString("fr-FR")}`;
+      copyPairsArea.value = linesPairs.join("\n");
+      copyEmailsArea.value = emailBlocks.join("\n------------------------------\n\n");
+
+      resultsSection.style.display = "block";
+    }
+
+    async function copyTextFrom(element, successMsg) {
+      const text = element.value.trim();
+      if (!text) return;
+
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          element.select();
+          document.execCommand("copy");
+        }
+        showStatus(successMsg, "success");
+      } catch (err) {
+        console.error(err);
+        showStatus("Impossible de copier automatiquement. Copie directement depuis la zone de texte.", "error");
+      }
+    }
+
+    btnGenerate.addEventListener("click", () => {
+      try {
+        showStatus("");
+        const participants = parseParticipants();
+
+        if (participants.length < 2) {
+          showStatus("Il faut au moins 2 participants pour faire un tirage.", "error");
+          resultsSection.style.display = "none";
+          return;
+        }
+
+        const pairs = generateDrawWithConstraints(participants);
+        renderResults(pairs);
+        showStatus("Tirage effectué avec succès.", "success");
+      } catch (e) {
+        console.error(e);
+        showStatus(e.message || "Un problème est survenu pendant le tirage.", "error");
+        resultsSection.style.display = "none";
+      }
+    });
+
+    btnClear.addEventListener("click", () => {
+      participantsInput.value = "";
+      resultsSection.style.display = "none";
+      lastPairs = [];
+      showStatus("Liste vidée.");
+    });
+
+    btnCopyPairs.addEventListener("click", () => {
+      copyTextFrom(copyPairsArea, "Résumé du tirage copié dans le presse-papiers.");
+    });
+
+    btnCopyEmails.addEventListener("click", () => {
+      copyTextFrom(copyEmailsArea, "Textes des mails copiés dans le presse-papiers.");
+    });
+  </script>
+</body>
+</html>

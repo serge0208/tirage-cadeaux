@@ -271,8 +271,8 @@
     <div class="card">
       <h1>Tirage au sort des cadeaux</h1>
       <p class="subtitle">
-        Application d’organisation : tu saisis chaque personne, le tirage respecte les couples,
-        et pour chacun un mail ou SMS est préparé avec la personne à gâter.
+        Tu saisis chaque personne : contacts, couple, et <strong>cadeau idéal</strong>.  
+        Le tirage respecte les couples, et celui qui offre reçoit la personne + l’idée de cadeau.
       </p>
 
       <div>
@@ -280,7 +280,7 @@
           <span>🎯</span> Participants
         </div>
         <p class="hint">
-          Remplis une ligne par personne. Au moins un moyen de contact (email ou téléphone) par personne.
+          Une ligne par personne. Au moins un moyen de contact (email ou téléphone).  
           Pour la contrainte de couple, indique le <strong>nom complet</strong> de l’autre.
         </p>
 
@@ -297,19 +297,21 @@
                 <th>Nom</th>
                 <th>Email</th>
                 <th>Téléphone</th>
-                <th>En couple avec (Nom Prénom)</th>
+                <th>En couple avec</th>
+                <th>Cadeau idéal</th>
                 <th></th>
               </tr>
             </thead>
             <tbody id="participants-body">
-              <!-- Lignes générées en JS -->
+              <!-- lignes générées en JS -->
             </tbody>
           </table>
         </div>
 
         <div class="hint">
           ➜ Pour les couples, mets exactement le même nom complet que dans la ligne de l’autre  
-          (ex : Alice Dupont ↔ Bob Martin). Le tirage interdira ces paires.
+          (ex : « Alice Dupont » ↔ « Bob Martin »).  
+          ➜ Le champ <strong>Cadeau idéal</strong> peut rester vide si la personne ne sait pas.
         </div>
 
         <div class="actions">
@@ -321,8 +323,7 @@
 
       <div id="results-section" class="hidden" style="margin-top:1.4rem;">
         <div class="section-title">
-          <span>📜</span> Résultat du tirage (pour l’organisateur)
-        </div>
+          <span>📜</span> Résultat du tirage (pour l’organisateur)</div>
         <div id="results-meta" class="hint"></div>
 
         <div class="table-container" style="max-height:260px; margin-top:0.5rem;">
@@ -331,6 +332,7 @@
               <tr>
                 <th>Offre</th>
                 <th>À</th>
+                <th>Souhait du receveur</th>
               </tr>
             </thead>
             <tbody id="results-table-body"></tbody>
@@ -357,8 +359,8 @@
             <span>📨</span> Préparer les mails et SMS
           </div>
           <p class="hint">
-            Un bloc par personne. Sur ordinateur : les mails s’ouvrent dans ton logiciel de messagerie.
-            Sur téléphone : les SMS s’ouvrent dans l’appli Messages. Tu n’as plus qu’à vérifier et envoyer.
+            Un bloc par personne. Sur téléphone : les SMS s’ouvrent dans l’appli Messages.  
+            Tu n’as plus qu’à vérifier le texte (avec le cadeau idéal) et envoyer.
           </p>
 
           <div class="table-container" style="max-height:260px;">
@@ -408,6 +410,7 @@
       const tdEmail = document.createElement('td');
       const tdPhone = document.createElement('td');
       const tdPartner = document.createElement('td');
+      const tdGift = document.createElement('td');
       const tdRemove = document.createElement('td');
 
       const inputFirst = document.createElement('input');
@@ -435,6 +438,11 @@
       inputPartner.placeholder = 'Nom Prénom du conjoint';
       inputPartner.value = data.partner || '';
 
+      const inputGift = document.createElement('input');
+      inputGift.type = 'text';
+      inputGift.placeholder = 'Ex. parfum, livre, Lego...';
+      inputGift.value = data.gift || '';
+
       const btnDel = document.createElement('button');
       btnDel.type = 'button';
       btnDel.className = 'btn-danger';
@@ -448,6 +456,7 @@
       tdEmail.appendChild(inputEmail);
       tdPhone.appendChild(inputPhone);
       tdPartner.appendChild(inputPartner);
+      tdGift.appendChild(inputGift);
       tdRemove.appendChild(btnDel);
 
       tr.appendChild(tdFirst);
@@ -455,6 +464,7 @@
       tr.appendChild(tdEmail);
       tr.appendChild(tdPhone);
       tr.appendChild(tdPartner);
+      tr.appendChild(tdGift);
       tr.appendChild(tdRemove);
 
       participantsBody.appendChild(tr);
@@ -471,12 +481,12 @@
     addExampleBtn.addEventListener('click', () => {
       clearParticipants();
       const exemples = [
-        { firstName: 'Alice', lastName: 'Dupont', email: 'alice@test.com', phone: '', partner: 'Bob Martin' },
-        { firstName: 'Bob', lastName: 'Martin', email: '', phone: '0601020304', partner: 'Alice Dupont' },
-        { firstName: 'Carole', lastName: 'Durand', email: 'carole@test.com', phone: '', partner: 'David Leroy' },
-        { firstName: 'David', lastName: 'Leroy', email: '', phone: '0611223344', partner: 'Carole Durand' },
-        { firstName: 'Emma', lastName: 'Morel', email: 'emma@test.com', phone: '', partner: '' },
-        { firstName: 'Lucas', lastName: 'Bernard', email: '', phone: '0655667788', partner: '' }
+        { firstName: 'Alice', lastName: 'Dupont', email: 'alice@test.com', phone: '', partner: 'Bob Martin', gift: 'Livre de développement perso' },
+        { firstName: 'Bob', lastName: 'Martin', email: '', phone: '0601020304', partner: 'Alice Dupont', gift: 'Montre connectée' },
+        { firstName: 'Carole', lastName: 'Durand', email: 'carole@test.com', phone: '', partner: 'David Leroy', gift: 'Parfum' },
+        { firstName: 'David', lastName: 'Leroy', email: '', phone: '0611223344', partner: 'Carole Durand', gift: 'Bouteille de vin' },
+        { firstName: 'Emma', lastName: 'Morel', email: 'emma@test.com', phone: '', partner: '', gift: 'Bougie parfumée' },
+        { firstName: 'Lucas', lastName: 'Bernard', email: '', phone: '0655667788', partner: '', gift: 'Casque audio' }
       ];
       exemples.forEach(e => createParticipantRow(e));
     });
@@ -505,9 +515,10 @@
         const email = inputs[2].value.trim();
         const phone = inputs[3].value.trim();
         const partner = inputs[4].value.trim();
+        const gift = inputs[5].value.trim();
 
-        if (!firstName && !lastName && !email && !phone) {
-          continue; // ligne vide
+        if (!firstName && !lastName && !email && !phone && !partner && !gift) {
+          continue; // ligne totalement vide
         }
 
         if (!firstName || !lastName) {
@@ -524,7 +535,8 @@
           lastName,
           email,
           phone,
-          partnerName: partner
+          partnerName: partner,
+          giftWish: gift
         });
       }
 
@@ -589,7 +601,7 @@
         }
       }
 
-      throw new Error("Impossible de générer un tirage qui respecte toutes les contraintes (couples, etc.). Vérifie les noms \"En couple avec\".");
+      throw new Error("Impossible de générer un tirage qui respecte toutes les contraintes (couples, etc.). Vérifie les noms « En couple avec ».");
     }
 
     function buildMessages(participants, assignments) {
@@ -607,13 +619,19 @@
 
         const giverFull = `${giver.firstName} ${giver.lastName}`;
         const receiverFull = `${receiver.firstName} ${receiver.lastName}`;
+        const wish = (receiver.giftWish || '').trim();
 
-        linesPairs.push(`${giverFull} -> ${receiverFull}`);
+        const wishLine = wish
+          ? `Idée cadeau : ${wish}.`
+          : `(Cette personne n'a pas indiqué de cadeau idéal précis, fais-toi plaisir 😉.)`;
+
+        linesPairs.push(`${giverFull} -> ${receiverFull} ${wish ? `(souhait: ${wish})` : ''}`);
 
         const msg =
 `Bonjour ${giver.firstName},
 
 Tu offriras un cadeau à : ${receiverFull}.
+${wishLine}
 
 Garde cette info pour toi 😊
 (Ne réponds pas à tout le monde, sinon tu spoiles le tirage !)`;
@@ -647,12 +665,15 @@ ${msg}
         const tr = document.createElement('tr');
         const tdG = document.createElement('td');
         const tdR = document.createElement('td');
+        const tdW = document.createElement('td');
 
         tdG.textContent = `${giver.firstName} ${giver.lastName}`;
         tdR.textContent = `${receiver.firstName} ${receiver.lastName}`;
+        tdW.textContent = receiver.giftWish ? receiver.giftWish : '—';
 
         tr.appendChild(tdG);
         tr.appendChild(tdR);
+        tr.appendChild(tdW);
         resultsTableBody.appendChild(tr);
       });
 
@@ -660,7 +681,8 @@ ${msg}
       copyMessagesArea.value = messageBlocks.join('\n------------------------------\n\n');
 
       notificationsRows.forEach(item => {
-        const { giver, receiverFull, message } = item;
+        const { giver, message } = item;
+
         const tr = document.createElement('tr');
         const tdName = document.createElement('td');
         const tdContacts = document.createElement('td');
@@ -732,7 +754,8 @@ ${msg}
         notificationsBody.appendChild(tr);
       });
 
-      resultsMeta.textContent = `${participants.length} participants • tirage généré le ${new Date().toLocaleString('fr-FR')}`;
+      resultsMeta.textContent =
+        `${participants.length} participants • tirage généré le ${new Date().toLocaleString('fr-FR')}`;
       resultsSection.classList.remove('hidden');
     }
 

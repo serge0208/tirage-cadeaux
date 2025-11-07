@@ -12,38 +12,37 @@
       padding: 0;
       min-height: 100vh;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #1e293b 0, #020617 40%, #020617 100%);
+      background: radial-gradient(circle at top, #0f172a 0, #020617 45%, #020617 100%);
       color: #e5e7eb;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .app-wrapper {
+    .wrapper {
       width: 100%;
       padding: 1.5rem;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
     }
 
     .card {
       width: 100%;
-      max-width: 980px;
+      max-width: 1100px;
       background: rgba(15, 23, 42, 0.96);
       border-radius: 1.5rem;
-      padding: 1.75rem;
+      padding: 1.75rem 1.5rem;
       box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.45),
-        0 0 0 1px rgba(148, 163, 184, 0.18);
+        0 25px 70px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(148, 163, 184, 0.3);
       backdrop-filter: blur(18px);
-      animation: fade-in 0.6s ease-out;
     }
 
     h1 {
-      margin: 0 0 0.35rem;
-      font-size: 1.9rem;
+      margin: 0 0 0.4rem;
       text-align: center;
+      font-size: 1.9rem;
       letter-spacing: 0.03em;
     }
 
@@ -51,65 +50,97 @@
       text-align: center;
       font-size: 0.95rem;
       color: #9ca3af;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.4rem;
     }
 
-    label {
-      display: block;
+    .section-title {
       font-weight: 600;
-      margin-bottom: 0.35rem;
-      color: #e5e7eb;
+      font-size: 1.05rem;
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
     }
 
-    textarea {
-      width: 100%;
-      resize: vertical;
-      min-height: 180px;
-      padding: 0.8rem;
-      border-radius: 0.9rem;
-      border: 1px solid #374151;
-      background: #020617;
-      color: #e5e7eb;
-      font-family: inherit;
-      font-size: 0.95rem;
-      line-height: 1.4;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.12s ease;
-    }
-
-    textarea:focus {
-      outline: none;
-      border-color: #38bdf8;
-      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.4);
-      transform: translateY(-1px);
+    .section-title span {
+      font-size: 1.2rem;
     }
 
     .hint {
       font-size: 0.8rem;
       color: #9ca3af;
-      margin-top: 0.3rem;
+      margin-bottom: 0.5rem;
     }
 
-    .actions {
-      margin-top: 1rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      align-items: center;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    th, td {
+      padding: 0.45rem 0.4rem;
+      border-bottom: 1px solid #111827;
+      vertical-align: middle;
+    }
+
+    th {
+      text-align: left;
+      background: rgba(15, 23, 42, 0.95);
+      font-weight: 600;
+      color: #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    tr:nth-child(even) td {
+      background: rgba(15, 23, 42, 0.75);
+    }
+
+    tr:nth-child(odd) td {
+      background: rgba(15, 23, 42, 0.6);
+    }
+
+    .table-container {
+      max-height: 320px;
+      overflow: auto;
+      border-radius: 0.9rem;
+      border: 1px solid #1f2937;
+      box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.9);
+      margin-bottom: 0.75rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"] {
+      width: 100%;
+      padding: 0.4rem 0.5rem;
+      border-radius: 0.55rem;
+      border: 1px solid #374151;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 0.85rem;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.4);
     }
 
     button {
       border: none;
       border-radius: 9999px;
-      padding: 0.7rem 1.4rem;
+      padding: 0.6rem 1.3rem;
       font-size: 0.9rem;
       cursor: pointer;
       font-weight: 600;
-      letter-spacing: 0.02em;
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+      gap: 0.35rem;
       white-space: nowrap;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
     }
 
     button:active {
@@ -120,649 +151,609 @@
     .btn-primary {
       background: linear-gradient(135deg, #38bdf8, #6366f1);
       color: #0b1120;
-      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+      box-shadow: 0 12px 30px rgba(59, 130, 246, 0.55);
     }
 
     .btn-primary:hover {
       background: linear-gradient(135deg, #0ea5e9, #4f46e5);
-      box-shadow: 0 14px 30px rgba(59, 130, 246, 0.55);
       transform: translateY(-1px);
     }
 
     .btn-secondary {
-      background: rgba(15, 23, 42, 0.9);
+      background: rgba(15, 23, 42, 0.95);
       color: #e5e7eb;
       border: 1px solid #4b5563;
     }
 
     .btn-secondary:hover {
-      background: rgba(31, 41, 55, 0.95);
+      background: rgba(31, 41, 55, 0.98);
       transform: translateY(-1px);
-      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.6);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.9);
+    }
+
+    .btn-danger {
+      background: rgba(127, 29, 29, 0.85);
+      color: #fee2e2;
+      border: 1px solid rgba(248, 113, 113, 0.7);
+      padding: 0.3rem 0.7rem;
+      font-size: 0.75rem;
+    }
+
+    .btn-danger:hover {
+      background: rgba(185, 28, 28, 0.95);
+    }
+
+    .actions {
+      margin-top: 0.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
     }
 
     .status {
       font-size: 0.85rem;
       color: #9ca3af;
+      min-height: 1.1rem;
     }
 
     .status.error { color: #fb7185; }
     .status.success { color: #4ade80; }
 
-    .section-title {
-      margin-top: 1.6rem;
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: #e5e7eb;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .section-title span {
-      font-size: 1.1rem;
-    }
-
-    .results-card {
-      margin-top: 1.1rem;
-      padding-top: 1.1rem;
-      border-top: 1px dashed #374151;
-    }
-
-    .results-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.8rem;
-      flex-wrap: wrap;
-    }
-
-    .results-meta {
-      font-size: 0.8rem;
-      color: #9ca3af;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 0.8rem;
-      font-size: 0.9rem;
-    }
-
-    th, td {
-      padding: 0.55rem 0.6rem;
-      border-bottom: 1px solid #111827;
-    }
-
-    th {
-      text-align: left;
-      background: rgba(15, 23, 42, 0.9);
-      font-weight: 600;
-      color: #e5e7eb;
-    }
-
-    tr:nth-child(even) td {
-      background: rgba(15, 23, 42, 0.65);
-    }
-
-    tr:nth-child(odd) td {
-      background: rgba(15, 23, 42, 0.45);
-    }
-
-    .copy-grid {
+    .two-columns {
       display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.4fr);
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: 1rem;
       margin-top: 1rem;
     }
 
-    .copy-title {
+    .copy-area-title {
       font-weight: 600;
+      font-size: 0.95rem;
       margin-bottom: 0.25rem;
     }
 
-    .copy-textarea {
+    textarea {
       width: 100%;
       min-height: 80px;
-      font-size: 0.85rem;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       border-radius: 0.8rem;
       border: 1px solid #374151;
       background: #020617;
       color: #e5e7eb;
       padding: 0.55rem;
+      font-size: 0.85rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       resize: vertical;
     }
 
-    .emails-table td {
-      vertical-align: middle;
+    .notifications-table td {
+      font-size: 0.85rem;
     }
 
-    .badge-email {
+    .badge-contact {
       display: inline-flex;
       align-items: center;
       padding: 0.15rem 0.5rem;
       border-radius: 9999px;
       font-size: 0.75rem;
-      background: rgba(22, 163, 74, 0.15);
-      color: #bbf7d0;
-      border: 1px solid rgba(34, 197, 94, 0.45);
+      border: 1px solid #4b5563;
+      color: #e5e7eb;
     }
 
-    .badge-email.missing {
-      background: rgba(127, 29, 29, 0.4);
-      color: #fecaca;
-      border-color: rgba(248, 113, 113, 0.7);
+    .badge-contact.mail {
+      border-color: #38bdf8;
+      color: #bae6fd;
+    }
+
+    .badge-contact.sms {
+      border-color: #22c55e;
+      color: #bbf7d0;
     }
 
     a.btn-link {
       text-decoration: none;
     }
 
-    .hidden {
-      display: none !important;
-    }
+    .hidden { display: none !important; }
 
-    /* Écran de connexion admin */
-    .login-card {
-      max-width: 420px;
-      width: 100%;
-      background: rgba(15, 23, 42, 0.96);
-      border-radius: 1.5rem;
-      padding: 1.75rem 1.5rem 1.5rem;
-      box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.6),
-        0 0 0 1px rgba(148, 163, 184, 0.25);
-      backdrop-filter: blur(18px);
-      animation: fade-in 0.5s ease-out;
-    }
-
-    .login-title {
-      text-align: center;
-      font-size: 1.5rem;
-      margin-bottom: 0.2rem;
-    }
-
-    .login-subtitle {
-      text-align: center;
-      font-size: 0.85rem;
-      color: #9ca3af;
-      margin-bottom: 1.2rem;
-    }
-
-    .login-input {
-      width: 100%;
-      padding: 0.7rem 0.9rem;
-      border-radius: 9999px;
-      border: 1px solid #374151;
-      background: #020617;
-      color: #e5e7eb;
-      font-size: 0.95rem;
-      margin-bottom: 0.4rem;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.12s ease;
-    }
-
-    .login-input:focus {
-      outline: none;
-      border-color: #facc15;
-      box-shadow: 0 0 0 1px rgba(250, 204, 21, 0.45);
-      transform: translateY(-1px);
-    }
-
-    .login-hint {
-      font-size: 0.75rem;
-      color: #6b7280;
-      margin-bottom: 0.8rem;
-    }
-
-    .login-error {
-      font-size: 0.8rem;
-      color: #fb7185;
-      min-height: 1rem;
-      margin-top: 0.15rem;
-    }
-
-    .center-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      padding: 1.5rem;
-    }
-
-    @media (max-width: 768px) {
-      .card { padding: 1.3rem 1.1rem; border-radius: 1.1rem; }
-      h1 { font-size: 1.5rem; }
-      .copy-grid { grid-template-columns: 1fr; }
-      .actions { flex-direction: column; align-items: flex-start; }
+    @media (max-width: 900px) {
+      .card { padding: 1.3rem 1.1rem; border-radius: 1.2rem; }
+      h1 { font-size: 1.6rem; }
+      .two-columns { grid-template-columns: 1fr; }
+      .table-container { max-height: 260px; }
       button { width: 100%; justify-content: center; }
-      textarea { min-height: 150px; }
-    }
-
-    @keyframes fade-in {
-      from {
-        opacity: 0;
-        transform: translateY(12px) scale(0.99);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+      .actions { flex-direction: column; align-items: stretch; }
     }
   </style>
 </head>
 <body>
-  <div class="app-wrapper">
-    <!-- Écran organisateur / admin -->
-    <div id="login-screen" class="center-wrapper">
-      <div class="login-card">
-        <div class="login-title">Tirage au sort des cadeaux</div>
-        <div class="login-subtitle">
-          Espace organisateur. Entrez le <strong>code d’accès</strong> pour préparer le tirage.
-        </div>
-
-        <label for="admin-code">Code organisateur</label>
-        <input
-          id="admin-code"
-          type="password"
-          class="login-input"
-          placeholder="Ex. noel2025"
-        />
-        <div class="login-hint">
-          Le code est défini dans le fichier <code>index.html</code> (constante <strong>ADMIN_CODE</strong>).
-        </div>
-
-        <button id="btn-login" class="btn-primary" style="width:100%; justify-content:center;">
-          Entrer dans l’outil
-        </button>
-        <div id="login-error" class="login-error"></div>
-      </div>
-    </div>
-
-    <!-- Application principale -->
-    <div id="main-app" class="card hidden">
+  <div class="wrapper">
+    <div class="card">
       <h1>Tirage au sort des cadeaux</h1>
       <p class="subtitle">
-        Application d’organisation du tirage : seul l’organisateur voit le résultat complet.
-        Les participants reçoivent chacun un message personnel avec la personne à gâter.
+        Application d’organisation : tu saisis chaque personne, le tirage respecte les couples,
+        et pour chacun un mail ou SMS est préparé avec la personne à gâter.
       </p>
 
       <div>
         <div class="section-title">
-          <span>🎯</span> Liste des participants
+          <span>🎯</span> Participants
         </div>
-        <label for="participants">
-          Format : <code>Nom ; contact (email ou téléphone) ; couple (optionnel)</code>
-        </label>
-        <textarea id="participants" placeholder="Exemple :
-Alice ; alice@test.com ; couple1
-Bob ; 0601020304 ; couple1
-Carole ; carole@test.com ; couple2
-David ; 0611223344 ; couple2
-Emma ; emma@test.com ;
-Lucas ; 0655667788 ;"></textarea>
         <p class="hint">
-          ➜ Un participant par ligne. <br />
-          ➜ <strong>Nom</strong> obligatoire, <strong>contact</strong> = email ou n° de téléphone, <strong>couple</strong> facultatif. <br />
-          ➜ Les personnes ayant le même <strong>couple</strong> ne pourront pas se tirer entre elles (conjoints, etc.).
+          Remplis une ligne par personne. Au moins un moyen de contact (email ou téléphone) par personne.
+          Pour la contrainte de couple, indique le <strong>nom complet</strong> de l’autre.
         </p>
-      </div>
 
-      <div class="actions">
-        <button class="btn-primary" id="btn-generate">
-          🎁 Générer le tirage
-        </button>
-        <button class="btn-secondary" id="btn-clear">
-          🧹 Vider la liste
-        </button>
-        <span id="status" class="status"></span>
-      </div>
-
-      <!-- Résultats -->
-      <div id="results-section" class="results-card hidden">
-        <div class="results-header">
-          <div>
-            <div class="section-title" style="margin-top:0;">
-              <span>📜</span> Résultat du tirage (visible uniquement par toi)
-            </div>
-            <div id="results-meta" class="results-meta"></div>
-          </div>
-          <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-            <button class="btn-secondary" id="btn-copy-pairs">
-              Copier le tableau
-            </button>
-          </div>
+        <div style="margin-bottom:0.5rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
+          <button id="add-participant" class="btn-secondary">+ Ajouter un participant</button>
+          <button id="add-example" class="btn-secondary">Pré-remplir avec un exemple</button>
         </div>
 
-        <table id="results-table">
-          <thead>
-            <tr>
-              <th>Offre un cadeau</th>
-              <th>À</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Téléphone</th>
+                <th>En couple avec (Nom Prénom)</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="participants-body">
+              <!-- Lignes générées en JS -->
+            </tbody>
+          </table>
+        </div>
 
-        <div class="copy-grid">
+        <div class="hint">
+          ➜ Pour les couples, mets exactement le même nom complet que dans la ligne de l’autre  
+          (ex : Alice Dupont ↔ Bob Martin). Le tirage interdira ces paires.
+        </div>
+
+        <div class="actions">
+          <button id="btn-generate" class="btn-primary">🎁 Générer le tirage</button>
+          <button id="btn-clear" class="btn-secondary">🧹 Vider tout</button>
+          <span id="status" class="status"></span>
+        </div>
+      </div>
+
+      <div id="results-section" class="hidden" style="margin-top:1.4rem;">
+        <div class="section-title">
+          <span>📜</span> Résultat du tirage (pour l’organisateur)
+        </div>
+        <div id="results-meta" class="hint"></div>
+
+        <div class="table-container" style="max-height:260px; margin-top:0.5rem;">
+          <table>
+            <thead>
+              <tr>
+                <th>Offre</th>
+                <th>À</th>
+              </tr>
+            </thead>
+            <tbody id="results-table-body"></tbody>
+          </table>
+        </div>
+
+        <div class="two-columns">
           <div>
-            <div class="copy-title">Résumé du tirage</div>
-            <div class="hint">Pour garder une trace interne (ne pas partager tel quel).</div>
-            <textarea id="copy-pairs" class="copy-textarea" readonly></textarea>
+            <div class="copy-area-title">Résumé texte du tirage</div>
+            <div class="hint">Pratique pour archiver ou garder une copie.</div>
+            <textarea id="copy-pairs" readonly></textarea>
           </div>
           <div>
-            <div class="copy-title">Textes de messages (backup)</div>
+            <div class="copy-area-title">Messages à envoyer (backup)</div>
             <div class="hint">
-              Version brute de tous les messages (mail ou SMS). L’envoi réel se fait dans le tableau ci-dessous.
+              Tous les messages (mail/SMS) bruts. L’envoi réel se fait via les boutons ci-dessous pour chaque personne.
             </div>
-            <textarea id="copy-emails-text" class="copy-textarea" readonly></textarea>
+            <textarea id="copy-messages" readonly></textarea>
           </div>
         </div>
 
         <div style="margin-top:1.4rem;">
           <div class="section-title">
-            <span>📨</span> Envoi aux participants
+            <span>📨</span> Préparer les mails et SMS
           </div>
           <p class="hint">
-            Un bouton par personne : ça ouvre soit ton client mail, soit ton appli SMS (sur téléphone), avec le message pré-rempli.  
-            <strong>Chaque participant voit uniquement la personne à qui il doit offrir.</strong>
+            Un bloc par personne. Sur ordinateur : les mails s’ouvrent dans ton logiciel de messagerie.
+            Sur téléphone : les SMS s’ouvrent dans l’appli Messages. Tu n’as plus qu’à vérifier et envoyer.
           </p>
 
-          <table class="emails-table">
-            <thead>
-              <tr>
-                <th>Participant</th>
-                <th>Contact</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody id="emails-table-body"></tbody>
-          </table>
+          <div class="table-container" style="max-height:260px;">
+            <table class="notifications-table">
+              <thead>
+                <tr>
+                  <th>Participant</th>
+                  <th>Contacts</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="notifications-body"></tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
   <script>
-    // ⚙️ Code organisateur (à adapter pour ta famille)
-    const ADMIN_CODE = "noel2025";
+    const participantsBody = document.getElementById('participants-body');
+    const addParticipantBtn = document.getElementById('add-participant');
+    const addExampleBtn = document.getElementById('add-example');
+    const btnGenerate = document.getElementById('btn-generate');
+    const btnClear = document.getElementById('btn-clear');
+    const statusEl = document.getElementById('status');
+    const resultsSection = document.getElementById('results-section');
+    const resultsMeta = document.getElementById('results-meta');
+    const resultsTableBody = document.getElementById('results-table-body');
+    const copyPairsArea = document.getElementById('copy-pairs');
+    const copyMessagesArea = document.getElementById('copy-messages');
+    const notificationsBody = document.getElementById('notifications-body');
 
-    const loginScreen = document.getElementById("login-screen");
-    const mainApp = document.getElementById("main-app");
-    const loginInput = document.getElementById("admin-code");
-    const loginBtn = document.getElementById("btn-login");
-    const loginError = document.getElementById("login-error");
-
-    function handleLogin() {
-      const value = (loginInput.value || "").trim();
-      if (!value) {
-        loginError.textContent = "Entre le code organisateur.";
-        return;
-      }
-      if (value === ADMIN_CODE) {
-        loginError.textContent = "";
-        loginScreen.classList.add("hidden");
-        mainApp.classList.remove("hidden");
-        mainApp.scrollIntoView({ behavior: "smooth" });
-      } else {
-        loginError.textContent = "Code incorrect. Vérifie la valeur de ADMIN_CODE dans index.html.";
-      }
+    function setStatus(msg, type = '') {
+      statusEl.textContent = msg || '';
+      statusEl.className = 'status';
+      if (type === 'error') statusEl.classList.add('error');
+      if (type === 'success') statusEl.classList.add('success');
     }
 
-    loginBtn.addEventListener("click", handleLogin);
-    loginInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        handleLogin();
-      }
+    function createParticipantRow(data = {}) {
+      const tr = document.createElement('tr');
+      tr.className = 'participant-row';
+
+      const tdFirst = document.createElement('td');
+      const tdLast = document.createElement('td');
+      const tdEmail = document.createElement('td');
+      const tdPhone = document.createElement('td');
+      const tdPartner = document.createElement('td');
+      const tdRemove = document.createElement('td');
+
+      const inputFirst = document.createElement('input');
+      inputFirst.type = 'text';
+      inputFirst.placeholder = 'Prénom';
+      inputFirst.value = data.firstName || '';
+
+      const inputLast = document.createElement('input');
+      inputLast.type = 'text';
+      inputLast.placeholder = 'Nom';
+      inputLast.value = data.lastName || '';
+
+      const inputEmail = document.createElement('input');
+      inputEmail.type = 'email';
+      inputEmail.placeholder = 'email@example.com';
+      inputEmail.value = data.email || '';
+
+      const inputPhone = document.createElement('input');
+      inputPhone.type = 'tel';
+      inputPhone.placeholder = '06XXXXXXXX';
+      inputPhone.value = data.phone || '';
+
+      const inputPartner = document.createElement('input');
+      inputPartner.type = 'text';
+      inputPartner.placeholder = 'Nom Prénom du conjoint';
+      inputPartner.value = data.partner || '';
+
+      const btnDel = document.createElement('button');
+      btnDel.type = 'button';
+      btnDel.className = 'btn-danger';
+      btnDel.textContent = 'Supprimer';
+      btnDel.addEventListener('click', () => {
+        tr.remove();
+      });
+
+      tdFirst.appendChild(inputFirst);
+      tdLast.appendChild(inputLast);
+      tdEmail.appendChild(inputEmail);
+      tdPhone.appendChild(inputPhone);
+      tdPartner.appendChild(inputPartner);
+      tdRemove.appendChild(btnDel);
+
+      tr.appendChild(tdFirst);
+      tr.appendChild(tdLast);
+      tr.appendChild(tdEmail);
+      tr.appendChild(tdPhone);
+      tr.appendChild(tdPartner);
+      tr.appendChild(tdRemove);
+
+      participantsBody.appendChild(tr);
+    }
+
+    function clearParticipants() {
+      participantsBody.innerHTML = '';
+    }
+
+    addParticipantBtn.addEventListener('click', () => {
+      createParticipantRow();
     });
 
-    const participantsInput = document.getElementById("participants");
-    const btnGenerate = document.getElementById("btn-generate");
-    const btnClear = document.getElementById("btn-clear");
-    const statusEl = document.getElementById("status");
-    const resultsSection = document.getElementById("results-section");
-    const resultsTableBody = document.querySelector("#results-table tbody");
-    const resultsMeta = document.getElementById("results-meta");
-    const btnCopyPairs = document.getElementById("btn-copy-pairs");
-    const copyPairsArea = document.getElementById("copy-pairs");
-    const copyEmailsArea = document.getElementById("copy-emails-text");
-    const emailsTableBody = document.getElementById("emails-table-body");
+    addExampleBtn.addEventListener('click', () => {
+      clearParticipants();
+      const exemples = [
+        { firstName: 'Alice', lastName: 'Dupont', email: 'alice@test.com', phone: '', partner: 'Bob Martin' },
+        { firstName: 'Bob', lastName: 'Martin', email: '', phone: '0601020304', partner: 'Alice Dupont' },
+        { firstName: 'Carole', lastName: 'Durand', email: 'carole@test.com', phone: '', partner: 'David Leroy' },
+        { firstName: 'David', lastName: 'Leroy', email: '', phone: '0611223344', partner: 'Carole Durand' },
+        { firstName: 'Emma', lastName: 'Morel', email: 'emma@test.com', phone: '', partner: '' },
+        { firstName: 'Lucas', lastName: 'Bernard', email: '', phone: '0655667788', partner: '' }
+      ];
+      exemples.forEach(e => createParticipantRow(e));
+    });
+
+    btnClear.addEventListener('click', () => {
+      clearParticipants();
+      resultsSection.classList.add('hidden');
+      copyPairsArea.value = '';
+      copyMessagesArea.value = '';
+      notificationsBody.innerHTML = '';
+      setStatus('Liste vidée.');
+    });
+
+    function normalizeFullName(first, last) {
+      return (first + ' ' + last).trim().toLowerCase();
+    }
 
     function parseParticipants() {
-      const lines = participantsInput.value.split("\n");
-      const map = new Map();
+      const rows = Array.from(document.querySelectorAll('.participant-row'));
+      const participants = [];
 
-      for (let line of lines) {
-        const trimmed = line.trim();
-        if (!trimmed) continue;
+      for (const row of rows) {
+        const inputs = row.querySelectorAll('input');
+        const firstName = inputs[0].value.trim();
+        const lastName = inputs[1].value.trim();
+        const email = inputs[2].value.trim();
+        const phone = inputs[3].value.trim();
+        const partner = inputs[4].value.trim();
 
-        const parts = trimmed.split(";").map(p => p.trim());
-        if (!parts[0]) continue;
+        if (!firstName && !lastName && !email && !phone) {
+          continue; // ligne vide
+        }
 
-        const name = parts[0];
-        const contact = parts[1] || "";
-        const group = parts[2] || "";
+        if (!firstName || !lastName) {
+          throw new Error('Chaque participant doit avoir un prénom et un nom.');
+        }
 
-        map.set(name, { name, contact, group });
+        if (!email && !phone) {
+          throw new Error(`Il faut un email ou un téléphone pour ${firstName} ${lastName}.`);
+        }
+
+        participants.push({
+          id: participants.length,
+          firstName,
+          lastName,
+          email,
+          phone,
+          partnerName: partner
+        });
       }
 
-      return Array.from(map.values());
+      if (participants.length < 2) {
+        throw new Error('Il faut au moins 2 participants.');
+      }
+
+      return participants;
     }
 
-    function generateDrawWithConstraints(participants, maxTries = 6000) {
+    function generateDraw(participants, maxTries = 8000) {
       const n = participants.length;
-      if (n < 2) {
-        throw new Error("Il faut au moins 2 participants.");
-      }
+      const nameIndex = new Map();
+
+      participants.forEach(p => {
+        nameIndex.set(normalizeFullName(p.firstName, p.lastName), p.id);
+      });
+
+      const forbidden = new Map();
+
+      participants.forEach(p => {
+        const set = new Set();
+        set.add(p.id); // pas soi-même
+
+        if (p.partnerName) {
+          const partnerId = nameIndex.get(p.partnerName.trim().toLowerCase());
+          if (partnerId !== undefined) {
+            set.add(partnerId);
+          }
+        }
+
+        forbidden.set(p.id, set);
+      });
+
+      const ids = participants.map(p => p.id);
 
       for (let attempt = 0; attempt < maxTries; attempt++) {
-        const indices = [...Array(n).keys()];
-
-        // Shuffle
-        for (let i = n - 1; i > 0; i--) {
+        const receivers = [...ids];
+        // mélange
+        for (let i = receivers.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
-          [indices[i], indices[j]] = [indices[j], indices[i]];
+          [receivers[i], receivers[j]] = [receivers[j], receivers[i]];
         }
 
-        let valid = true;
-
+        let ok = true;
         for (let i = 0; i < n; i++) {
-          const giver = participants[i];
-          const receiver = participants[indices[i]];
-
-          if (indices[i] === i) { // se tire soi-même
-            valid = false;
-            break;
-          }
-
-          if (giver.group && receiver.group && giver.group === receiver.group) {
-            // même couple / groupe
-            valid = false;
+          const giverId = ids[i];
+          const receiverId = receivers[i];
+          const forb = forbidden.get(giverId);
+          if (forb && forb.has(receiverId)) {
+            ok = false;
             break;
           }
         }
 
-        if (valid) {
-          const pairs = [];
+        if (ok) {
+          const assignments = [];
           for (let i = 0; i < n; i++) {
-            const giver = participants[i];
-            const receiver = participants[indices[i]];
-            pairs.push({
-              giver: giver.name,
-              giverContact: giver.contact,
-              receiver: receiver.name,
-              receiverContact: receiver.contact
-            });
+            assignments.push({ giverId: ids[i], receiverId: receivers[i] });
           }
-          return pairs;
+          return assignments;
         }
       }
 
-      throw new Error("Impossible de générer un tirage qui respecte toutes les contraintes (couples, etc.).");
+      throw new Error("Impossible de générer un tirage qui respecte toutes les contraintes (couples, etc.). Vérifie les noms \"En couple avec\".");
     }
 
-    function showStatus(message, type = "") {
-      statusEl.textContent = message;
-      statusEl.className = "status";
-      if (type === "error") statusEl.classList.add("error");
-      if (type === "success") statusEl.classList.add("success");
-    }
-
-    function renderResults(pairs) {
-      resultsTableBody.innerHTML = "";
-      emailsTableBody.innerHTML = "";
+    function buildMessages(participants, assignments) {
+      const byId = new Map();
+      participants.forEach(p => byId.set(p.id, p));
 
       const linesPairs = [];
       const messageBlocks = [];
+      const notificationsRows = [];
 
-      pairs.forEach(p => {
-        // Tableau récap
-        const tr = document.createElement("tr");
-        const tdGiver = document.createElement("td");
-        const tdReceiver = document.createElement("td");
-        tdGiver.textContent = p.giver;
-        tdReceiver.textContent = p.receiver;
-        tr.appendChild(tdGiver);
-        tr.appendChild(tdReceiver);
-        resultsTableBody.appendChild(tr);
+      assignments.forEach(a => {
+        const giver = byId.get(a.giverId);
+        const receiver = byId.get(a.receiverId);
+        if (!giver || !receiver) return;
 
-        linesPairs.push(`${p.giver} -> ${p.receiver}`);
+        const giverFull = `${giver.firstName} ${giver.lastName}`;
+        const receiverFull = `${receiver.firstName} ${receiver.lastName}`;
 
-        // Message brut (pour backup)
-        if (p.giverContact && p.giverContact.length > 0) {
-          const block =
-`Pour : ${p.giver} (${p.giverContact})
-Canal : ${p.giverContact.includes("@") ? "Email" : "Téléphone"}
+        linesPairs.push(`${giverFull} -> ${receiverFull}`);
 
-Message à envoyer :
+        const msg =
+`Bonjour ${giver.firstName},
 
-Bonjour ${p.giver},
-
-Tu offriras un cadeau à : ${p.receiver}.
-
-Garde ça pour toi 😊
-`;
-          messageBlocks.push(block);
-        }
-
-        // Tableau des actions (mail ou SMS)
-        const trEmail = document.createElement("tr");
-        const tdName = document.createElement("td");
-        const tdContact = document.createElement("td");
-        const tdAction = document.createElement("td");
-
-        tdName.textContent = p.giver;
-
-        if (p.giverContact) {
-          const span = document.createElement("span");
-          span.className = "badge-email";
-          span.textContent = p.giverContact;
-          tdContact.appendChild(span);
-
-          const isEmail = p.giverContact.includes("@");
-
-          const body =
-`Bonjour ${p.giver},
-
-Tu offriras un cadeau à : ${p.receiver}.
+Tu offriras un cadeau à : ${receiverFull}.
 
 Garde cette info pour toi 😊
+(Ne réponds pas à tout le monde, sinon tu spoiles le tirage !)`;
 
-(Ne réponds pas à tous, sinon tu spoiles le tirage !)`;
+        messageBlocks.push(
+`Pour : ${giverFull}
+Email : ${giver.email || '-'}
+Téléphone : ${giver.phone || '-'}
+Message :
+${msg}
+`
+        );
 
-          let href = "";
-          if (isEmail) {
-            const subject = "Tirage de Noël - ta personne à gâter";
-            href = `mailto:${encodeURIComponent(p.giverContact)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-          } else {
-            // lien SMS (à ouvrir de préférence depuis un téléphone)
-            href = `sms:${encodeURIComponent(p.giverContact)}?&body=${encodeURIComponent(body)}`;
-          }
-
-          const link = document.createElement("a");
-          link.href = href;
-          link.className = "btn-link";
-
-          const btn = document.createElement("button");
-          btn.className = "btn-secondary";
-          btn.textContent = isEmail ? "Préparer le mail" : "Préparer le SMS";
-          link.appendChild(btn);
-
-          tdAction.appendChild(link);
-        } else {
-          const span = document.createElement("span");
-          span.className = "badge-email missing";
-          span.textContent = "Aucun contact renseigné";
-          tdContact.appendChild(span);
-
-          const small = document.createElement("span");
-          small.className = "hint";
-          small.textContent = " Ajoute un email ou un numéro dans la liste au-dessus pour activer l’envoi.";
-          tdAction.appendChild(small);
-        }
-
-        trEmail.appendChild(tdName);
-        trEmail.appendChild(tdContact);
-        trEmail.appendChild(tdAction);
-        emailsTableBody.appendChild(trEmail);
+        notificationsRows.push({ giver, receiverFull, message: msg });
       });
 
-      resultsMeta.textContent =
-        `${pairs.length} participants • tirage généré le ${new Date().toLocaleString("fr-FR")}`;
-
-      copyPairsArea.value = linesPairs.join("\n");
-      copyEmailsArea.value = messageBlocks.join("\n------------------------------\n\n");
-      resultsSection.classList.remove("hidden");
+      return { linesPairs, messageBlocks, notificationsRows };
     }
 
-    async function copyTextFrom(element, successMsg) {
-      const text = element.value.trim();
-      if (!text) return;
+    function renderResults(participants, assignments) {
+      resultsTableBody.innerHTML = '';
+      notificationsBody.innerHTML = '';
 
-      try {
-        if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(text);
+      const { linesPairs, messageBlocks, notificationsRows } = buildMessages(participants, assignments);
+
+      assignments.forEach(a => {
+        const giver = participants.find(p => p.id === a.giverId);
+        const receiver = participants.find(p => p.id === a.receiverId);
+        if (!giver || !receiver) return;
+
+        const tr = document.createElement('tr');
+        const tdG = document.createElement('td');
+        const tdR = document.createElement('td');
+
+        tdG.textContent = `${giver.firstName} ${giver.lastName}`;
+        tdR.textContent = `${receiver.firstName} ${receiver.lastName}`;
+
+        tr.appendChild(tdG);
+        tr.appendChild(tdR);
+        resultsTableBody.appendChild(tr);
+      });
+
+      copyPairsArea.value = linesPairs.join('\n');
+      copyMessagesArea.value = messageBlocks.join('\n------------------------------\n\n');
+
+      notificationsRows.forEach(item => {
+        const { giver, receiverFull, message } = item;
+        const tr = document.createElement('tr');
+        const tdName = document.createElement('td');
+        const tdContacts = document.createElement('td');
+        const tdActions = document.createElement('td');
+
+        tdName.textContent = `${giver.firstName} ${giver.lastName}`;
+
+        const contactBadges = [];
+        if (giver.email) {
+          const span = document.createElement('span');
+          span.className = 'badge-contact mail';
+          span.textContent = giver.email;
+          contactBadges.push(span);
+        }
+        if (giver.phone) {
+          const span = document.createElement('span');
+          span.className = 'badge-contact sms';
+          span.textContent = giver.phone;
+          contactBadges.push(span);
+        }
+        if (contactBadges.length === 0) {
+          tdContacts.textContent = 'Aucun contact';
         } else {
-          element.select();
-          document.execCommand("copy");
+          contactBadges.forEach((b, idx) => {
+            if (idx > 0) tdContacts.appendChild(document.createTextNode(' '));
+            tdContacts.appendChild(b);
+          });
         }
-        showStatus(successMsg, "success");
-      } catch {
-        showStatus("Impossible de copier automatiquement. Copie directement depuis la zone de texte.", "error");
-      }
+
+        const actions = [];
+
+        if (giver.email) {
+          const subject = 'Tirage de Noël - ta personne à gâter';
+          const href = `mailto:${encodeURIComponent(giver.email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+          const aMail = document.createElement('a');
+          aMail.href = href;
+          aMail.className = 'btn-link';
+          const btnMail = document.createElement('button');
+          btnMail.className = 'btn-secondary';
+          btnMail.textContent = 'Préparer le mail';
+          aMail.appendChild(btnMail);
+          actions.push(aMail);
+        }
+
+        if (giver.phone) {
+          const hrefSms = `sms:${encodeURIComponent(giver.phone)}?&body=${encodeURIComponent(message)}`;
+          const aSms = document.createElement('a');
+          aSms.href = hrefSms;
+          aSms.className = 'btn-link';
+          const btnSms = document.createElement('button');
+          btnSms.className = 'btn-secondary';
+          btnSms.textContent = 'Préparer le SMS';
+          aSms.appendChild(btnSms);
+          actions.push(aSms);
+        }
+
+        if (actions.length === 0) {
+          tdActions.textContent = 'Compléter email / téléphone';
+        } else {
+          actions.forEach((el, idx) => {
+            if (idx > 0) tdActions.appendChild(document.createTextNode(' '));
+            tdActions.appendChild(el);
+          });
+        }
+
+        tr.appendChild(tdName);
+        tr.appendChild(tdContacts);
+        tr.appendChild(tdActions);
+        notificationsBody.appendChild(tr);
+      });
+
+      resultsMeta.textContent = `${participants.length} participants • tirage généré le ${new Date().toLocaleString('fr-FR')}`;
+      resultsSection.classList.remove('hidden');
     }
 
-    btnGenerate.addEventListener("click", () => {
+    btnGenerate.addEventListener('click', () => {
       try {
-        showStatus("");
+        setStatus('');
         const participants = parseParticipants();
-
-        if (participants.length < 2) {
-          showStatus("Il faut au moins 2 participants pour faire un tirage.", "error");
-          resultsSection.classList.add("hidden");
-          return;
-        }
-
-        const pairs = generateDrawWithConstraints(participants);
-        renderResults(pairs);
-        showStatus("Tirage effectué avec succès.", "success");
-      } catch (e) {
-        console.error(e);
-        showStatus(e.message || "Un problème est survenu pendant le tirage.", "error");
-        resultsSection.classList.add("hidden");
+        const assignments = generateDraw(participants);
+        renderResults(participants, assignments);
+        setStatus('Tirage effectué avec succès.', 'success');
+      } catch (err) {
+        console.error(err);
+        setStatus(err.message || 'Erreur pendant le tirage.', 'error');
+        resultsSection.classList.add('hidden');
       }
     });
 
-    btnClear.addEventListener("click", () => {
-      participantsInput.value = "";
-      resultsSection.classList.add("hidden");
-      showStatus("Liste vidée.");
-    });
-
-    btnCopyPairs.addEventListener("click", () => {
-      copyTextFrom(copyPairsArea, "Résumé du tirage copié dans le presse-papiers.");
-    });
+    // On commence avec quelques lignes vides pour aider
+    for (let i = 0; i < 4; i++) {
+      createParticipantRow();
+    }
   </script>
 </body>
 </html>
